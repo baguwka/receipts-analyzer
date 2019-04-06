@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ReceiptsApiServer.Model
+namespace ReceiptsServer.Model
 {
     public class ReceiptRequest
     {

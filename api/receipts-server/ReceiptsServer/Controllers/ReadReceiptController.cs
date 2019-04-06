@@ -1,8 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CheckReceiptSDK;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ReceiptsApiServer.Model;
+using Newtonsoft.Json.Linq;
+using ReceiptsServer.Model;
 
-namespace ReceiptsApiServer.Controllers
+namespace ReceiptsServer.Controllers
 {
     [ApiController]
     public class ReadReceiptController : ControllerBase
