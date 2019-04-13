@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReceiptsServer.EF.Model;
+using ReceiptsCore.EF.Model;
 
-namespace ReceiptsServer
+namespace ReceiptsCore
 {
     public class ApplicationContext : DbContext
     {
         public DbSet<Item> Items { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
