@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReceiptsServer.EF.Model
+namespace ReceiptsCore.EF.Model
 {
     [Table("items")]
     public class Item
@@ -12,6 +12,8 @@ namespace ReceiptsServer.EF.Model
 
         [Column("receipt_id")]
         public int ReceiptId { get; set; }
+
+        public Receipt Receipt { get; set; }
 
         [Column("name")]
         public string Name { get; set; }
