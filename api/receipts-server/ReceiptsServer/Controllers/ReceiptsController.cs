@@ -74,7 +74,7 @@ namespace ReceiptsServer.Controllers
                 doc = result.Document;
                 if (doc == null)
                 {
-                    await Task.Delay(100);
+                    await Task.Delay(500);
                     continue;
                 }
 
