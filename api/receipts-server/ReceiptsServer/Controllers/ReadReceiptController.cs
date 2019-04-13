@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CheckReceiptSDK;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore;
 using ReceiptsServer.Model;
 
 namespace ReceiptsServer.Controllers
 {
     [ApiController]
-    public class ReadReceiptController : ControllerBase
+    public class ReadReceiptController : Controller
     {
-        [HttpPost]
-        [Route("api/test")]
+        [HttpGet]
+        [Route("api/items")]
         public async Task<IActionResult> Test([FromForm] ReceiptRequest request)
         {
-            return Ok();
+            using (var db = new ApplicationContext())
+            {
+                var items = await db.Items.ToListAsync();
+                return Json(new
+                {
+                    items = items
+                });
+            }
         }
     }
 }
