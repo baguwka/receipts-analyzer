@@ -15,5 +15,15 @@ namespace ReceiptsCore
                 return items;
             }
         }
+
+        public async Task<Item> AddItem(Item item)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var addedReceipt = await db.Items.AddAsync(item);
+                await db.SaveChangesAsync();
+                return addedReceipt.Entity;
+            }
+        }
     }
 }

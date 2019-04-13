@@ -13,6 +13,8 @@ namespace ReceiptsCore.EF.Model
         [Column("receipt_id")]
         public int ReceiptId { get; set; }
 
+        public Receipt Receipt { get; set; }
+
         [Column("name")]
         public string Name { get; set; }
 

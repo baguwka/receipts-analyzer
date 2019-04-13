@@ -7,5 +7,6 @@ namespace ReceiptsCore
     public interface IItemsProvider
     {
         Task<IReadOnlyCollection<Item>> GetItemsAsync();
+        Task<Item> AddItem(Item item);
     }
 }

@@ -30,6 +30,7 @@ namespace ReceiptsServer
 
             services.AddTransient<IUsersProvider, DbUsersProvider>();
             services.AddTransient<IItemsProvider, DbItemsProvider>();
+            services.AddTransient<IReceiptsProvider, DbReceiptsProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
