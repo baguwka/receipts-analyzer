@@ -8,19 +8,19 @@ namespace FNSIntegrationTesting
 {
     public class LoginTesting
     {
-        private User _User;
+        private FnsUser _FnsUser;
 
         [OneTimeSetUp]
         public async Task Setup()
         {
             var usersProvider = new DbUsersProvider();
-            _User = await usersProvider.GetUserForTestsAsync();
+            _FnsUser = await usersProvider.GetUserForTestsAsync();
         }
 
         [Test]
         public async Task LoginToFns()
         {
-            var login = await FNS.LoginAsync(_User.Username, _User.Password);
+            var login = await FNS.LoginAsync(_FnsUser.Username, _FnsUser.Password);
             Assert.That(login.IsSuccess, Is.EqualTo(true));
         }
     }

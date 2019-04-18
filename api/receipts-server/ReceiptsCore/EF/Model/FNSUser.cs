@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReceiptsCore.EF.Model
 {
-    [Table("users")]
-    public class User
+    [Table("fns_users")]
+    public class FnsUser
     {
         [Key]
         [Column("id")]

@@ -5,7 +5,7 @@ namespace ReceiptsCore
 {
     public interface IUsersProvider
     {
-        Task<User> GetMainUserAsync();
-        Task<User> GetUserForTestsAsync();
+        Task<FnsUser> GetMainUserAsync();
+        Task<FnsUser> GetUserForTestsAsync();
     }
 }

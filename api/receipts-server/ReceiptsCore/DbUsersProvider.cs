@@ -6,7 +6,7 @@ namespace ReceiptsCore
 {
     public class DbUsersProvider : IUsersProvider
     {
-        public async Task<User> GetMainUserAsync()
+        public async Task<FnsUser> GetMainUserAsync()
         {
             using (var db = new ApplicationContext())
             {
@@ -15,7 +15,7 @@ namespace ReceiptsCore
             }
         }
 
-        public async Task<User> GetUserForTestsAsync()
+        public async Task<FnsUser> GetUserForTestsAsync()
         {
             using (var db = new ApplicationContext())
             {
