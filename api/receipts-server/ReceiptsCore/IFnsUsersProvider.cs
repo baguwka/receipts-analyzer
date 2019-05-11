@@ -3,7 +3,7 @@ using ReceiptsCore.EF.Model;
 
 namespace ReceiptsCore
 {
-    public interface IUsersProvider
+    public interface IFnsUsersProvider
     {
         Task<FnsUser> GetMainUserAsync();
         Task<FnsUser> GetUserForTestsAsync();

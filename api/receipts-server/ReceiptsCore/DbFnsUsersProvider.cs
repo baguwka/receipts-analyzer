@@ -4,7 +4,7 @@ using ReceiptsCore.EF.Model;
 
 namespace ReceiptsCore
 {
-    public class DbUsersProvider : IUsersProvider
+    public class DbFnsUsersProvider : IFnsUsersProvider
     {
         public async Task<FnsUser> GetMainUserAsync()
         {

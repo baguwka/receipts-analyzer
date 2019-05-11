@@ -13,7 +13,7 @@ namespace FNSIntegrationTesting
         [OneTimeSetUp]
         public async Task Setup()
         {
-            var usersProvider = new DbUsersProvider();
+            var usersProvider = new DbFnsUsersProvider();
             _FnsUser = await usersProvider.GetUserForTestsAsync();
         }
 
