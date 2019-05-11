@@ -12,7 +12,7 @@ namespace FNSIntegrationTesting
         public async Task GetReceiptWithItems()
         {
             var provider = new DbReceiptsProvider();
-            var receipts = await provider.GetReceipts();
+            var receipts = await provider.GetReceiptsAsync();
             Assert.That(receipts.All(r => r.Items != null), Is.True);
         }
     }

@@ -28,7 +28,7 @@ namespace ReceiptsServer
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IUsersProvider, DbUsersProvider>();
+            services.AddTransient<IFnsUsersProvider, DbFnsUsersProvider>();
             services.AddTransient<IItemsProvider, DbItemsProvider>();
             services.AddTransient<IReceiptsProvider, DbReceiptsProvider>();
         }

@@ -6,8 +6,8 @@ namespace ReceiptsCore
 {
     public interface IReceiptsProvider
     {
-        Task<IReadOnlyCollection<Receipt>> GetReceipts();
-        Task<Receipt> GetReceiptByHash(string hash);
-        Task<Receipt> AddReceipt(Receipt receipt);
+        Task<IReadOnlyCollection<Receipt>> GetReceiptsAsync();
+        Task<Receipt> GetReceiptByHashAsync(string hash);
+        Task<Receipt> AddReceiptAsync(Receipt receipt);
     }
 }
