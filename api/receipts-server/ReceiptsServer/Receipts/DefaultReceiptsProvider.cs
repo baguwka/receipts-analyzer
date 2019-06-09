@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using CheckReceiptSDK.Results;
 using JetBrains.Annotations;
 using ReceiptsCore;
+using ReceiptsCore.EF.Model;
 using ReceiptsCore.Hash;
 using ReceiptsServer.Model;
+using ReceiptsServer.Receipts.Exceptions;
 using Item = ReceiptsCore.EF.Model.Item;
 using Receipt = ReceiptsCore.EF.Model.Receipt;
 
@@ -61,6 +63,10 @@ namespace ReceiptsServer.Receipts
                 
                 var result = await _FnsService.ReceiveAsync(request.FiscalNumber, request.FiscalDocument, request.FiscalSign);
                 doc = result.Document;
+                if (result.StatusCode == HttpStatusCode.PaymentRequired)
+                {
+                    throw new OverLimitException("Free FNS requests limit exceeded. Login as another user or pay to FNS.");
+                }
                 if (doc == null && result.StatusCode == HttpStatusCode.Accepted)
                 {
                     await Task.Delay(500);
@@ -86,6 +92,23 @@ namespace ReceiptsServer.Receipts
             var addedReceipt = await _ReceiptsRepository.AddReceiptAsync(receipt);
             if (addedReceipt == null)
                 throw new FailedToAddReceiptException("Failed to add receipt to db");
+
+            var extended = new ReceiptExtended
+            {
+                ReceiptId = addedReceipt.ReceiptId,
+                Cashier = doc.Receipt.Cashier,
+                StoreName = doc.Receipt.StoreName,
+                RetailAddress = doc.Receipt.RetailPlaceAddress,
+                KktRegId = doc.Receipt.KktRegId,
+                ShiftNumber = doc.Receipt.ShiftNumber.ToString(),
+                RetailInn = doc.Receipt.RetailInn
+            };
+
+            var addedExtended = await _ReceiptsRepository.AddExtendedInfoToReceipt(extended);
+            if (addedExtended == null)
+            {
+                //todo what to do? we don't care actually much, but need logs or something
+            }
 
             var addedItems = new List<Item>();
 

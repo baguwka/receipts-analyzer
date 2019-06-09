@@ -4,19 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReceiptsCore.EF.Model;
-using ReceiptsCore.Hash;
 
 namespace ReceiptsCore
 {
     public class DbReceiptsRepository : IReceiptsRepository
     {
-        private readonly IHashCalculator _HashCalculator;
-
-        public DbReceiptsRepository(IHashCalculator hashCalculator)
-        {
-            _HashCalculator = hashCalculator ?? throw new ArgumentNullException(nameof(hashCalculator));
-        }
-
         public async Task<IReadOnlyCollection<Receipt>> GetReceiptsAsync()
         {
             using (var db = new ApplicationContext())
@@ -63,6 +55,16 @@ namespace ReceiptsCore
                     .FirstOrDefaultAsync();
 
                 return receipt != null;
+            }
+        }
+
+        public async Task<ReceiptExtended> AddExtendedInfoToReceipt(ReceiptExtended extended)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var addedExtended = await db.ReceiptsExtended.AddAsync(extended);
+                await db.SaveChangesAsync();
+                return addedExtended.Entity;
             }
         }
     }

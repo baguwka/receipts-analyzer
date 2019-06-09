@@ -10,5 +10,6 @@ namespace ReceiptsCore
         Task<Receipt> GetReceiptByHashAsync(string hash);
         Task<Receipt> AddReceiptAsync(Receipt receipt);
         Task<bool> IsReceiptExistsByHashAsync(string hash);
+        Task<ReceiptExtended> AddExtendedInfoToReceipt(ReceiptExtended extended);
     }
 }

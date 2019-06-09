@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReceiptsServer.Receipts
+namespace ReceiptsServer.Receipts.Exceptions
 {
     public class FnsProbablyUnavailableException : Exception
     {

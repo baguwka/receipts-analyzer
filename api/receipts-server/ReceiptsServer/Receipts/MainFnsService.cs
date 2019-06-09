@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CheckReceiptSDK;
 using CheckReceiptSDK.Results;
 using ReceiptsCore;
+using ReceiptsServer.Receipts.Exceptions;
 
 namespace ReceiptsServer.Receipts
 {

@@ -38,7 +38,7 @@ namespace ReceiptsServer.Controllers
 
         [HttpGet]
         [Route("api/items")]
-        public async Task<IActionResult> GetReceipt()
+        public async Task<IActionResult> GetItems()
         {
             var items = await _ItemsRepository.GetItemsAsync();
             return Json(items);

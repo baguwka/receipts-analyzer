@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ReceiptsCore;
 using ReceiptsCore.Hash;
+using ReceiptsServer.Middlewares;
 using ReceiptsServer.Receipts;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -58,7 +59,10 @@ namespace ReceiptsServer
             }
 
             //app.UseHttpsRedirection();
+            app.UseMiddleware<JsonAllErrorHandlingMiddleware>();
+
             app.UseMvc();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
