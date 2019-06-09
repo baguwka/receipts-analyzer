@@ -1,13 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using ReceiptsCore.Hash;
 using ReceiptsCore.Utils;
 
 namespace ReceiptsServer.Model
 {
-    public class ReceiptRequest
+    public class AddReceiptResult
+    {
+        [JsonProperty("hash")]
+        public string Hash { get; set; }
+
+        [JsonProperty("addedItemsCount")]
+        public int AddedItemsCount { get; set; }
+    }
+
+    public class ReceiptRequest : IHashable
     {
         [JsonProperty("t")]
         public string TimeRaw { get; set; }
@@ -29,6 +41,9 @@ namespace ReceiptsServer.Model
 
         [JsonProperty("n")]
         public string N { get; set; }
+
+        [JsonIgnore]
+        public string RawQRData { get; set; }
 
         public bool IsValid() =>
             Time != default(DateTime) &&
@@ -70,16 +85,24 @@ namespace ReceiptsServer.Model
             }
         }
 
-        public string ToMd5() => GetHashCode().ToString().ToMd5();
+        public static ReceiptRequest FromQuery(string query)
+        {
 
-        public static ReceiptRequest FromQuery(IQueryCollection queryCollection)
+            var dict = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(query);
+            return FromDictionary(query, dict);
+        }
+
+        private static ReceiptRequest FromDictionary(string rawQuery, Dictionary<string, StringValues> dict)
         {
             try
             {
-                var json = JsonConvert.SerializeObject(queryCollection
-                    .ToDictionary(pair => pair.Key, pair => pair.Value.FirstOrDefault()));
+                var singleValuesDict = dict
+                    .ToDictionary(pair => pair.Key, pair => pair.Value.FirstOrDefault());
+
+                var json = JsonConvert.SerializeObject(singleValuesDict);
                 var obj = JsonConvert.DeserializeObject<ReceiptRequest>(json);
-                if (DateTime.TryParseExact(obj.TimeRaw, new []
+                obj.RawQRData = rawQuery;
+                if (DateTime.TryParseExact(obj.TimeRaw, new[]
                 {
                     "yyyyMMddTHHmmss",
                     "yyyyMMddTHHmm"

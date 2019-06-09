@@ -4,7 +4,7 @@ using ReceiptsCore.EF.Model;
 
 namespace ReceiptsCore
 {
-    public class DbFnsUsersProvider : IFnsUsersProvider
+    public class DbFnsUsersRepository : IFnsUsersRepository
     {
         public async Task<FnsUser> GetMainUserAsync()
         {
@@ -12,15 +12,6 @@ namespace ReceiptsCore
             {
                 return await db.Users
                     .SingleOrDefaultAsync(u => u.Key == "main");
-            }
-        }
-
-        public async Task<FnsUser> GetUserForTestsAsync()
-        {
-            using (var db = new ApplicationContext())
-            {
-                return await db.Users
-                    .SingleOrDefaultAsync(u => u.Key == "tests");
             }
         }
     }
