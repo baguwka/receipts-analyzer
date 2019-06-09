@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ReceiptsCore;
+using ReceiptsCore.Hash;
+using ReceiptsServer.Receipts;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ReceiptsServer
 {
@@ -28,9 +31,18 @@ namespace ReceiptsServer
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IFnsUsersProvider, DbFnsUsersProvider>();
-            services.AddTransient<IItemsProvider, DbItemsProvider>();
-            services.AddTransient<IReceiptsProvider, DbReceiptsProvider>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info {Title = "Receipts API", Version = "v1"}); 
+            });
+
+            services.AddTransient<IFnsUsersRepository, DbFnsUsersRepository>();
+            services.AddTransient<IItemsRepository, DbItemsRepository>();
+            services.AddTransient<IReceiptsRepository, DbReceiptsRepository>();
+
+            services.AddTransient<IHashCalculator, JsonToMd5HashCalculator>();
+            services.AddTransient<IFnsService, MainFnsService>();
+            services.AddTransient<IReceiptsProvider, DefaultReceiptsProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +59,11 @@ namespace ReceiptsServer
 
             //app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Receipts API v1");
+            });
         }
     }
 }
