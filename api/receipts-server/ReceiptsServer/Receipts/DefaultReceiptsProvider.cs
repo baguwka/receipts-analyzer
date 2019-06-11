@@ -56,7 +56,7 @@ namespace ReceiptsServer.Receipts
 
             Document doc = null;
 
-            int tries = 3;
+            int tries = 6;
             while (tries > 0)
             {
                 tries--;
@@ -67,9 +67,16 @@ namespace ReceiptsServer.Receipts
                 {
                     throw new OverLimitException("Free FNS requests limit exceeded. Login as another user or pay to FNS.");
                 }
+
+                if (result.StatusCode != HttpStatusCode.Accepted &&
+                    result.StatusCode != HttpStatusCode.OK &&
+                    result.StatusCode != HttpStatusCode.Created)
+                {
+                    throw new Exception($"Failed to receive fns data. Status Code: {result.StatusCode}; Details: \'{result.Message}\'");
+                }
                 if (doc == null && result.StatusCode == HttpStatusCode.Accepted)
                 {
-                    await Task.Delay(500);
+                    await Task.Delay(750);
                     continue;
                 }
 
