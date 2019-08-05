@@ -20,16 +20,16 @@ namespace ReceiptsServer.Controllers
     [ApiController]
     public class ReceiptsController : Controller
     {
-        private readonly IUsersProvider _UsersProvider;
+        private readonly IFnsUsersProvider _FnsUsersProvider;
         private readonly IItemsProvider _ItemsProvider;
         private readonly IReceiptsProvider _ReceiptsProvider;
 
         public ReceiptsController(
-            IUsersProvider usersProvider,
+            IFnsUsersProvider fnsUsersProvider,
             IItemsProvider itemsProvider,
             IReceiptsProvider receiptsProvider)
         {
-            _UsersProvider = usersProvider ?? throw new ArgumentNullException(nameof(usersProvider));
+            _FnsUsersProvider = fnsUsersProvider ?? throw new ArgumentNullException(nameof(fnsUsersProvider));
             _ItemsProvider = itemsProvider ?? throw new ArgumentNullException(nameof(itemsProvider));
             _ReceiptsProvider = receiptsProvider;
         }
@@ -43,11 +43,56 @@ namespace ReceiptsServer.Controllers
         }
         //t=20190411T204900&s=1544.46&fn=9289000100255640&i=32050&fp=3926647768&n=1
 
+        [HttpGet]
+        [Route("api/receipts")]
+        public async Task<IActionResult> GetReceipts()
+        {
+            var receipts = await _ReceiptsProvider.GetReceiptsAsync();
+            return Json(new
+            {
+                receipts = receipts
+                    .Select(r => new
+                    {
+                        id = r.ReceiptId,
+                        date = r.Date,
+                        raw_qr = r.RawQrData,
+                        hash = r.Hash,
+                        extended = new
+                        {
+                            cashier = r.Extended?.Cashier,
+                            kkt_reg_id = r.Extended?.KktRegId,
+                            retail_inn = r.Extended?.RetailInn,
+                            retail_address = r.Extended?.RetailAddress,
+                            store_name = r.Extended?.StoreName,
+                            shift_number = r.Extended?.ShiftNumber
+                        },
+                        user = new
+                        {
+                            id = r.User?.Id,
+                            username = r.User?.Username,
+                            password = r.User?.PasswordHash
+                        },
+                        items = r.Items
+                            .Select(i => new
+                            {
+                                id = i.ItemId,
+                                name = i.Name,
+                                price = i.Price,
+                                sum = i.Sum,
+                                quantity = i.Quantity
+                            }),
+                    })
+            }, new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            });
+        }
+
         [HttpPost]
         [Route("api/addReceipt")]
         public async Task<IActionResult> AddReceipt()
         {
-            var user = await _UsersProvider.GetMainUserAsync();
+            var user = await _FnsUsersProvider.GetMainUserAsync();
             if (user == null)
                 return StatusCode(StatusCodes.Status500InternalServerError, "Can't find user to authorize to FNS. Internal server problem. Check db.");
 
@@ -56,7 +101,7 @@ namespace ReceiptsServer.Controllers
                 return BadRequest("Check your query string, it must be incorrect.");
 
             var hash = request.ToMd5();
-            var existedReceipt = await _ReceiptsProvider.GetReceiptByHash(hash);
+            var existedReceipt = await _ReceiptsProvider.GetReceiptByHashAsync(hash);
             if (existedReceipt != null)
                 return BadRequest("This receipt already added");
 
@@ -91,7 +136,7 @@ namespace ReceiptsServer.Controllers
                 RawQrData = Request.QueryString.Value,
             };
 
-            var addedReceipt = await _ReceiptsProvider.AddReceipt(receipt);
+            var addedReceipt = await _ReceiptsProvider.AddReceiptAsync(receipt);
             if (addedReceipt == null)
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add receipt to db");
 
