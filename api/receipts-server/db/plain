@@ -5,7 +5,7 @@
 -- Dumped from database version 11.1
 -- Dumped by pg_dump version 11.1
 
--- Started on 2019-08-06 23:20:15
+-- Started on 2019-08-06 23:56:49
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -294,7 +294,7 @@ GRANT ALL ON TABLE public.items TO app_main;
 GRANT ALL ON TABLE public.receipts TO app_main;
 
 
--- Completed on 2019-08-06 23:20:17
+-- Completed on 2019-08-06 23:56:49
 
 --
 -- PostgreSQL database dump complete
