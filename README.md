@@ -13,5 +13,6 @@
 1. Click `Restore...`
 1. Select file by clicking `...` at Filename field
 1. Select tar file
-https://i.imgur.com/uY15710.png
+[<img src="https://i.imgur.com/uY15710.png">](https://i.imgur.com/uY15710.png)
+
 1. Click Restore
