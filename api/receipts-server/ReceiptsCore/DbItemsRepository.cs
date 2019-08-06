@@ -5,7 +5,7 @@ using ReceiptsCore.EF.Model;
 
 namespace ReceiptsCore
 {
-    public class DbItemsProvider : IItemsProvider
+    public class DbItemsRepository : IItemsRepository
     {
         public async Task<IReadOnlyCollection<Item>> GetItemsAsync()
         {

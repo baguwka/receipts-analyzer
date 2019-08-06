@@ -8,6 +8,7 @@ namespace ReceiptsCore
         public DbSet<Item> Items { get; set; }
         public DbSet<FnsUser> Users { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<ReceiptExtended> ReceiptsExtended { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

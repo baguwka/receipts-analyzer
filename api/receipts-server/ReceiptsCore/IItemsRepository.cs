@@ -4,7 +4,7 @@ using ReceiptsCore.EF.Model;
 
 namespace ReceiptsCore
 {
-    public interface IItemsProvider
+    public interface IItemsRepository
     {
         Task<IReadOnlyCollection<Item>> GetItemsAsync();
         Task<Item> AddItem(Item item);

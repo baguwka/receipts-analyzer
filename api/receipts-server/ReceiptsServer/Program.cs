@@ -50,7 +50,7 @@ namespace ReceiptsServer
                 .AddCommandLine(args)
                 .Build();
 
-            var hostUrl = configuration["hosturl"];
+            hostUrl = configuration["hosturl"];
             if (string.IsNullOrEmpty(hostUrl))
                 hostUrl = "http://0.0.0.0:8200";
 #else

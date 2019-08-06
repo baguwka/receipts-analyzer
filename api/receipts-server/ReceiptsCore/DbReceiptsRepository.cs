@@ -7,7 +7,7 @@ using ReceiptsCore.EF.Model;
 
 namespace ReceiptsCore
 {
-    public class DbReceiptsProvider : IReceiptsProvider
+    public class DbReceiptsRepository : IReceiptsRepository
     {
         public async Task<IReadOnlyCollection<Receipt>> GetReceiptsAsync()
         {
@@ -43,6 +43,28 @@ namespace ReceiptsCore
                 var addedReceipt = await db.Receipts.AddAsync(receipt);
                 await db.SaveChangesAsync();
                 return addedReceipt.Entity;
+            }
+        }
+
+        public async Task<bool> IsReceiptExistsByHashAsync(string hash)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var receipt = await db.Receipts
+                    .Where(r => string.Equals(r.Hash, hash, StringComparison.Ordinal))
+                    .FirstOrDefaultAsync();
+
+                return receipt != null;
+            }
+        }
+
+        public async Task<ReceiptExtended> AddExtendedInfoToReceipt(ReceiptExtended extended)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var addedExtended = await db.ReceiptsExtended.AddAsync(extended);
+                await db.SaveChangesAsync();
+                return addedExtended.Entity;
             }
         }
     }
