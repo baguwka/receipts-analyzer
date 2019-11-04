@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Api" />
+      <Folder Include="Api\Dtos" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.1.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Receipts.Logic.Contract\Receipts.Logic.Contract.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="CheckReceiptSDK, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\libs\CheckReceiptSDK.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
