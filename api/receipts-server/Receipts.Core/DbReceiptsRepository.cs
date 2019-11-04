@@ -41,6 +41,7 @@ namespace Receipts.Core
         {
             using (var db = new ApplicationContext())
             {
+                receipt.CreatedAt = receipt.UpdatedAt = DateTime.Now;
                 var addedReceipt = await db.Receipts.AddAsync(receipt);
                 await db.SaveChangesAsync();
                 return addedReceipt.Entity;

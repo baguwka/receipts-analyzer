@@ -52,23 +52,33 @@ namespace Receipts.Logic.Receipts
                     if (isAlreadyAdded)
                     {
                         _Logger.LogInformation("Receipt \'{receiptRawData}\' already added to db", request.RawQRData);
-                        //todo объединить с IsReceiptAlreadyAddedAsync, убрать вообще это и провероять в query есть ли такой
-                        var hash = _HashCalculator.Calculate(request);
                         skipped.Add(new AddReceiptResult
                         {
-                            Hash = hash,
                             RawQRData = request.RawQRData,
                             Comment = "Already added"
                         });
                         continue;
                     }
-                    
+
                     var result = await AddReceiptAsync(request);
                     added.Add(result);
+                }
+                catch (OverLimitException overLimitException)
+                {
+                    skipped.Add(new AddReceiptResult
+                    {
+                        RawQRData = request.RawQRData,
+                        Comment = "Free FNS requests limit exceeded"
+                    });
                 }
                 catch (Exception exception)
                 {
                     _Logger.LogError(exception, "Failed to add receipt of many for \'{receiptRawData}\'", request.RawQRData);
+                    skipped.Add(new AddReceiptResult
+                    {
+                        RawQRData = request.RawQRData,
+                        Comment = exception.Message
+                    });
                 }
             }
             

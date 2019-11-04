@@ -14,7 +14,7 @@ namespace Receipts.Core.Contract.EF.Model
 
         [Column("date")]
         public DateTime Date { get; set; }
-
+        
         [Column("raw_qr_data")]
         public string RawQrData { get; set; }
 
@@ -29,5 +29,11 @@ namespace Receipts.Core.Contract.EF.Model
         public User User { get; set; }
 
         public ReceiptExtended Extended { get; set; }
+        
+        [Column("created_at")]
+        public DateTime? CreatedAt { get; set; }
+        
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; }
     }
 }
