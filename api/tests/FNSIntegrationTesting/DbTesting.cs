@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using ReceiptsCore;
+using Receipts.Core;
 
 namespace FNSIntegrationTesting
 {

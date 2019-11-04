@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Receipts.Core.Contract;
 using Receipts.Core.Contract.EF.Model;
 
-namespace ReceiptsCore
+namespace Receipts.Core
 {
     public class DbItemsRepository : IItemsRepository
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Receipts.Core.Contract.EF.Model;
 
-namespace ReceiptsCore
+namespace Receipts.Core
 {
     public class ApplicationContext : DbContext
     {
