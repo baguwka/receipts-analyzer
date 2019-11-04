@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReceiptsCore.EF.Model;
+using Receipts.Core.Contract.EF.Model;
 
 namespace ReceiptsCore
 {

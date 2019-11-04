@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <AssemblyName>DependencyRoot</AssemblyName>
+        <RootNamespace>DependencyRoot</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.dependencyinjection.abstractions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Receipts.Core.Contract\Receipts.Core.Contract.csproj" />
+      <ProjectReference Include="..\Receipts.Logic.Contract\Receipts.Logic.Contract.csproj" />
+      <ProjectReference Include="..\Receipts.Logic\Receipts.Logic.csproj" />
+      <ProjectReference Include="..\ReceiptsCore\ReceiptsCore.csproj" />
+    </ItemGroup>
+
+</Project>
