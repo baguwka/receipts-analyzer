@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ReceiptsCore.EF.Model;
+using Receipts.Core.Contract;
+using Receipts.Core.Contract.EF.Model;
 
 namespace ReceiptsCore
 {

@@ -14,5 +14,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Receipts.Core.Contract\Receipts.Core.Contract.csproj" />
+  </ItemGroup>
+
 
 </Project>
