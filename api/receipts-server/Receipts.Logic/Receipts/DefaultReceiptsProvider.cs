@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 using Receipts.Core.Contract;
 using Receipts.Core.Contract.EF.Model;
 using Receipts.Logic.Contract;
@@ -20,17 +21,59 @@ namespace Receipts.Logic.Receipts
         private readonly IItemsRepository _ItemsRepository;
         private readonly IFnsService _FnsService;
         private readonly IHashCalculator _HashCalculator;
+        private readonly ILogger _Logger;
 
         public DefaultReceiptsProvider(
             [NotNull] IReceiptsRepository receiptsRepository,
             [NotNull] IItemsRepository itemsRepository,
             [NotNull] IFnsService fnsService,
-            [NotNull] IHashCalculator hashCalculator)
+            [NotNull] IHashCalculator hashCalculator,
+            [NotNull] ILogger logger)
         {
             _ReceiptsRepository = receiptsRepository ?? throw new ArgumentNullException(nameof(receiptsRepository));
             _ItemsRepository = itemsRepository ?? throw new ArgumentNullException(nameof(itemsRepository));
             _FnsService = fnsService ?? throw new ArgumentNullException(nameof(fnsService));
             _HashCalculator = hashCalculator ?? throw new ArgumentNullException(nameof(hashCalculator));
+            _Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        public async Task<AddReceiptsResult> AddManyReceipts([NotNull] IEnumerable<ReceiptRequestDto> requests)
+        {
+            if (requests == null) throw new ArgumentNullException(nameof(requests));
+
+            var added = new List<AddReceiptResult>();
+            var skipped = new List<AddReceiptResult>();
+            
+            foreach (var request in requests)
+            {
+                try
+                {
+                    var isAlreadyAdded = await IsReceiptAlreadyAddedAsync(request);
+                    if (isAlreadyAdded)
+                    {
+                        _Logger.LogInformation("Receipt \'{receiptRawData}\' already added to db", request.RawQRData);
+                        //todo объединить с IsReceiptAlreadyAddedAsync, убрать вообще это и провероять в query есть ли такой
+                        var hash = _HashCalculator.Calculate(request);
+                        skipped.Add(new AddReceiptResult
+                        {
+                            Hash = hash
+                        });
+                        continue;
+                    }
+                    
+                    var result = await AddReceiptAsync(request);
+                    added.Add(result);
+                }
+                catch (Exception exception)
+                {
+                    _Logger.LogError(exception, "Failed to add receipt of many for \'{receiptRawData}\'", request.RawQRData);
+                }
+            }
+            
+            return new AddReceiptsResult
+            {
+                Added = added.ToArray()
+            };
         }
 
         public async Task<bool> IsReceiptAlreadyAddedAsync([NotNull] ReceiptRequestDto requestDto)
@@ -112,7 +155,7 @@ namespace Receipts.Logic.Receipts
             var addedExtended = await _ReceiptsRepository.AddExtendedInfoToReceipt(extended);
             if (addedExtended == null)
             {
-                //todo what to do? we don't care actually much, but need logs or something
+                _Logger.Log(LogLevel.Error, "Failed to add extended receipt for {receiptId}", extended.ReceiptId);
             }
 
             var addedItems = new List<Item>();
@@ -133,6 +176,7 @@ namespace Receipts.Logic.Receipts
 
             return new AddReceiptResult
             {
+                Id = addedReceipt.ReceiptId,
                 Hash = addedReceipt.Hash,
                 AddedItemsCount = addedItems.Count
             };

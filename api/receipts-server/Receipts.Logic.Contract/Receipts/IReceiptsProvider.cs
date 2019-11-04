@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Receipts.Logic.Contract.Receipts
 {
@@ -6,6 +7,7 @@ namespace Receipts.Logic.Contract.Receipts
     {
         Task<bool> IsReceiptAlreadyAddedAsync(ReceiptRequestDto requestDto);
         Task<AddReceiptResult> AddReceiptAsync(ReceiptRequestDto requestDto);
+        Task<AddReceiptsResult> AddManyReceipts(IEnumerable<ReceiptRequestDto> requests);
         Task<GetReceiptsResult> GetReceiptsAsync();
     }
 }
