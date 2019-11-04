@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Receipts.Core;
 using Receipts.Core.Contract;
 using Receipts.Framework;
 using Receipts.Logic.Contract.Hash;

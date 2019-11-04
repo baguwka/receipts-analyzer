@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using CheckReceiptSDK;
 using NUnit.Framework;
+using Receipts.Core;
 using Receipts.Core.Contract.EF.Model;
-using ReceiptsCore;
 
 namespace FNSIntegrationTesting
 {
