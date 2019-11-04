@@ -56,7 +56,9 @@ namespace Receipts.Logic.Receipts
                         var hash = _HashCalculator.Calculate(request);
                         skipped.Add(new AddReceiptResult
                         {
-                            Hash = hash
+                            Hash = hash,
+                            RawQRData = request.RawQRData,
+                            Comment = "Already added"
                         });
                         continue;
                     }
@@ -72,7 +74,8 @@ namespace Receipts.Logic.Receipts
             
             return new AddReceiptsResult
             {
-                Added = added.ToArray()
+                Added = added.ToArray(),
+                Skipped = skipped.ToArray()
             };
         }
 
@@ -178,7 +181,8 @@ namespace Receipts.Logic.Receipts
             {
                 Id = addedReceipt.ReceiptId,
                 Hash = addedReceipt.Hash,
-                AddedItemsCount = addedItems.Count
+                AddedItemsCount = addedItems.Count,
+                RawQRData = requestDto.RawQRData
             };
         }
 

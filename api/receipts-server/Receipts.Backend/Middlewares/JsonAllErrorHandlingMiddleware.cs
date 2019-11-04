@@ -32,6 +32,9 @@ namespace Receipts.Backend.Middlewares
         {
             var code = HttpStatusCode.InternalServerError;
 
+            if (exception is BadRequestException)
+                code = HttpStatusCode.BadRequest;
+            
             if (exception is OverLimitException)
                 code = HttpStatusCode.PaymentRequired;
 
