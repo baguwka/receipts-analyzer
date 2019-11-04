@@ -27,8 +27,8 @@
   <ItemGroup>
     <ProjectReference Include="..\DependencyRegistrator\DependencyRegistrator.csproj" />
     <ProjectReference Include="..\Receipts.Core.Contract\Receipts.Core.Contract.csproj" />
+    <ProjectReference Include="..\Receipts.Core\Receipts.Core.csproj" />
     <ProjectReference Include="..\Receipts.Logic.Contract\Receipts.Logic.Contract.csproj" />
-    <ProjectReference Include="..\ReceiptsCore\ReceiptsCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,13 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\receipts-server\ReceiptsCore\ReceiptsCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="CheckReceiptSDK">
       <HintPath>..\..\..\libs\CheckReceiptSDK.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\receipts-server\Receipts.Core\Receipts.Core.csproj" />
   </ItemGroup>
 
 </Project>

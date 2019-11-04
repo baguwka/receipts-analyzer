@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{46E6B278
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FNSIntegrationTesting", "..\tests\FNSIntegrationTesting\FNSIntegrationTesting.csproj", "{738EB31A-8B0C-4D89-A3F8-4F7191EBAB19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReceiptsCore", "ReceiptsCore\ReceiptsCore.csproj", "{C72DE8A8-8AF9-430E-A251-2EE27E24D18C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Receipts.Core", "Receipts.Core\Receipts.Core.csproj", "{C72DE8A8-8AF9-430E-A251-2EE27E24D18C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{AAAF23FE-8284-4B3F-932C-5C3BD56DE145}"
 EndProject
