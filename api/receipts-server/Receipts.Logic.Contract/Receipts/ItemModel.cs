@@ -18,7 +18,7 @@ namespace Receipts.Logic.Contract.Receipts
         public int Sum { get; set; }
 
         [JsonProperty("quantity")]
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
 
         public static ItemModel FromDbModel(Item item)
         {

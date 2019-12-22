@@ -180,7 +180,7 @@ namespace Receipts.Logic.Receipts
                     Sum = receiptItem.Sum,
                     Name = receiptItem.Name,
                     Price = receiptItem.Price,
-                    Quantity = (int)receiptItem.Quantity,
+                    Quantity = receiptItem.Quantity,
                     ReceiptId = addedReceipt.ReceiptId
                 };
                 var addedItem = await _ItemsRepository.AddItem(item);

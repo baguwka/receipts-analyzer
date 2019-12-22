@@ -25,6 +25,6 @@ namespace Receipts.Core.Contract.EF.Model
         public int Sum { get; set; }
 
         [Column("quantity")]
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
     }
 }
